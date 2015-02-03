@@ -11,19 +11,22 @@ import android.widget.TextView;
 public class MainActivity extends ActionBarActivity {
     private TextView textCalc;
     private double value;
-    private String currentText="";
-    private String prevText="";
+    private String currentText;
+    private String prevText;
 
     enum Symbols {
         Unset, Plus, Minus, Multiply, Divide
     }
-    private Symbols symbol = Symbols.Unset;
+    private Symbols symbol;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        this.textCalc = (TextView) findViewById(R.id.textView);
+        this.textCalc = (TextView)this.findViewById(R.id.textView);
+        currentText="";
+        prevText="";
+        symbol=Symbols.Unset;
     }
 
 
@@ -50,127 +53,115 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void AddNewNumber(String newNumber) {
-        this.textCalc.setText(currentText + newNumber);
+        this.textCalc.setText(this.currentText + newNumber);
         this.currentText = this.textCalc.getText().toString();
     }
 
-    public void onClickOneButton(View view) {
+    public void onOneButtonClick(View view) {
         AddNewNumber("1");
     }
 
-    public void onClickTwoButton(View view) {
+    public void onTwoButtonClick(View view) {
         AddNewNumber("2");
     }
 
-    public void onClickThirdButton(View view) {
+    public void onThirdButtonClick(View view) {
         AddNewNumber("3");
     }
 
-    public void onClickFourButton(View view) {
+    public void onFourButtonClick(View view) {
         AddNewNumber("4");
     }
 
-    public void onClickFiveButton(View view) {
+    public void onFiveButtonClick(View view) {
         AddNewNumber("5");
     }
 
-    public void onClickSixButton(View view) {
+    public void onSixButtonClick(View view) {
         AddNewNumber("6");
     }
 
-    public void onClickSevenButton(View view) {
+    public void onSevenButtonClick(View view) {
         AddNewNumber("7");
     }
 
-    public void onClickEightButton(View view) {
+    public void onEightButtonClick(View view) {
         AddNewNumber("8");
     }
 
-    public void onClickNineButton(View view) {
+    public void onNineButtonClick(View view) {
         AddNewNumber("9");
     }
 
-    public void onClickZeroButton(View view) {
+    public void onZeroButtonClick(View view) {
         AddNewNumber("0");
     }
-    public void onClickPlus(View view) {
-        if(currentText.isEmpty())
+
+    public void chooseAction (String action){
+        if(this.currentText.isEmpty()) {
             this.textCalc.setText("");
+            this.symbol = Symbols.Unset;
+        }
         else {
             this.value = Double.parseDouble(this.currentText);
-            this.textCalc.setText(currentText + "+");
-            this.currentText = textCalc.getText().toString();
-            this.prevText = textCalc.getText().toString();
+            this.textCalc.setText(this.currentText + action);
+            this.currentText = this.textCalc.getText().toString();
+            this.prevText = this.textCalc.getText().toString();
+        }
+    }
+    public void onPlusButtonClick(View view) {
             this.symbol = Symbols.Plus;
+            chooseAction("+");
         }
-    }
-    public void onClickMinus(View view) {
-        if(currentText.isEmpty())
-            this.textCalc.setText("");
-        else {
-            this.value = Double.parseDouble(this.currentText);
-            this.textCalc.setText(currentText + "-");
-            this.currentText = textCalc.getText().toString();
-            this.prevText = textCalc.getText().toString();
+    public void onMinusButtonClick(View view) {
             this.symbol = Symbols.Minus;
-        }
+            chooseAction("-");
+
     }
-    public void onClickMultiplyButton(View view) {
-        if(currentText.isEmpty())
-            this.textCalc.setText("");
-        else {
-            this.value = Double.parseDouble(this.currentText);
-            this.textCalc.setText(currentText + "*");
-            this.currentText = textCalc.getText().toString();
-            this.prevText = textCalc.getText().toString();
+    public void onMultiplyButtonClick(View view) {
             this.symbol = Symbols.Multiply;
-        }
+            chooseAction("*");
     }
-    public void onClickDivideButton(View view) {
-        if(currentText.isEmpty())
-            this.textCalc.setText("");
-        else {
-            this.value = Double.parseDouble(this.currentText);
-            this.textCalc.setText(currentText + "/");
-            this.currentText = textCalc.getText().toString();
-            this.prevText = textCalc.getText().toString();
+    public void onDivideButtonClick(View view) {
             this.symbol = Symbols.Divide;
-        }
+            chooseAction("/");
+
     }
-    public void onClickClearButton(View view) {
+    public void onClearButtonClick(View view) {
             this.textCalc.setText("");
             this.currentText = "";
             this.value = 0;
             this.symbol = Symbols.Unset;
     }
-    public void onClickEqualButton(View view) {
+
+    public void onEqualButtonClick(View view) {
         switch (this.symbol) {
             case Minus:
                 this.value -= Double.parseDouble(this.currentText.replace(this.prevText, ""));
-                this.textCalc.setText(String.valueOf(value));
+                this.textCalc.setText(String.valueOf(this.value));
                 this.currentText = this.textCalc.getText().toString();
                 break;
             case Plus:
                 this.value += Double.parseDouble(this.currentText.replace(this.prevText, ""));
-                this.textCalc.setText(String.valueOf(value));
+                this.textCalc.setText(String.valueOf(this.value));
                 this.currentText = this.textCalc.getText().toString();
                 break;
             case Multiply:
                 this.value *= Double.parseDouble(this.currentText.replace(this.prevText, ""));
-                this.textCalc.setText(String.valueOf(value));
+                this.textCalc.setText(String.valueOf(this.value));
                 this.currentText = this.textCalc.getText().toString();
                 break;
             case Divide:
                 this.value /= Double.parseDouble(this.currentText.replace(this.prevText, ""));
-                this.textCalc.setText(String.valueOf(value));
+                this.textCalc.setText(String.valueOf(this.value));
                 this.currentText = this.textCalc.getText().toString();
                 break;
             case Unset:
-                if(currentText.isEmpty())
+                if(this.currentText.isEmpty())
                     this.textCalc.setText("");
                 else {
                     this.value = Double.parseDouble(this.currentText);
-                    this.textCalc.setText(String.valueOf(value));
+                    this.textCalc.setText(String.valueOf(this.value));
                 }
         }
     }
