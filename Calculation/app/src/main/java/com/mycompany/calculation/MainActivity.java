@@ -12,7 +12,6 @@ public class MainActivity extends ActionBarActivity {
     private TextView textCalc;
     private double value;
     private String currentText;
-    private String prevText;
 
     enum Symbols {
         Unset, Plus, Minus, Multiply, Divide
@@ -25,10 +24,8 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         this.textCalc = (TextView)this.findViewById(R.id.textView);
         currentText="";
-        prevText="";
         symbol=Symbols.Unset;
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -53,8 +50,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void AddNewNumber(String newNumber) {
-        this.textCalc.setText(this.currentText + newNumber);
-        this.currentText = this.textCalc.getText().toString();
+        this.textCalc.setText(this.textCalc.getText().toString() + newNumber);
     }
 
     public void onOneButtonClick(View view) {
@@ -98,71 +94,62 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void chooseAction (String action){
-        if(this.currentText.isEmpty()) {
+        if(this.textCalc.getText().toString().equals(""))
+        {
             this.textCalc.setText("");
             this.symbol = Symbols.Unset;
         }
-        else {
-            this.value = Double.parseDouble(this.currentText);
-            this.textCalc.setText(this.currentText + action);
+        else
+        {
+            this.value = Double.parseDouble(this.textCalc.getText().toString());
+            this.textCalc.setText(this.textCalc.getText().toString() + action);
             this.currentText = this.textCalc.getText().toString();
-            this.prevText = this.textCalc.getText().toString();
         }
     }
     public void onPlusButtonClick(View view) {
-            this.symbol = Symbols.Plus;
-            chooseAction("+");
-        }
+        this.symbol = Symbols.Plus;
+        this.chooseAction("+");
+    }
     public void onMinusButtonClick(View view) {
-            this.symbol = Symbols.Minus;
-            chooseAction("-");
-
+        this.symbol = Symbols.Minus;
+        this.chooseAction("-");
     }
     public void onMultiplyButtonClick(View view) {
-            this.symbol = Symbols.Multiply;
-            chooseAction("*");
+        this.symbol = Symbols.Multiply;
+        this.chooseAction("*");
     }
     public void onDivideButtonClick(View view) {
-            this.symbol = Symbols.Divide;
-            chooseAction("/");
-
+        this.symbol = Symbols.Divide;
+        this.chooseAction("/");
     }
     public void onClearButtonClick(View view) {
-            this.textCalc.setText("");
-            this.currentText = "";
-            this.value = 0;
-            this.symbol = Symbols.Unset;
+        this.textCalc.setText("");
+        this.symbol = Symbols.Unset;
     }
-
     public void onEqualButtonClick(View view) {
-        switch (this.symbol) {
-            case Minus:
-                this.value -= Double.parseDouble(this.currentText.replace(this.prevText, ""));
-                this.textCalc.setText(String.valueOf(this.value));
-                this.currentText = this.textCalc.getText().toString();
-                break;
-            case Plus:
-                this.value += Double.parseDouble(this.currentText.replace(this.prevText, ""));
-                this.textCalc.setText(String.valueOf(this.value));
-                this.currentText = this.textCalc.getText().toString();
-                break;
-            case Multiply:
-                this.value *= Double.parseDouble(this.currentText.replace(this.prevText, ""));
-                this.textCalc.setText(String.valueOf(this.value));
-                this.currentText = this.textCalc.getText().toString();
-                break;
-            case Divide:
-                this.value /= Double.parseDouble(this.currentText.replace(this.prevText, ""));
-                this.textCalc.setText(String.valueOf(this.value));
-                this.currentText = this.textCalc.getText().toString();
-                break;
-            case Unset:
-                if(this.currentText.isEmpty())
-                    this.textCalc.setText("");
-                else {
-                    this.value = Double.parseDouble(this.currentText);
-                    this.textCalc.setText(String.valueOf(this.value));
+        if (this.textCalc.getText().toString().equals(""))
+            this.textCalc.setText("");
+        else {
+                switch (this.symbol) {
+                    case Minus:
+                        this.value -= Double.parseDouble(this.textCalc.getText().toString().replace(this.currentText, ""));
+                        break;
+                    case Plus:
+                        this.value += Double.parseDouble(this.textCalc.getText().toString().replace(this.currentText, ""));
+                        break;
+                    case Multiply:
+                        this.value *= Double.parseDouble(this.textCalc.getText().toString().replace(this.currentText, ""));
+                        break;
+                    case Divide:
+                        this.value /= Double.parseDouble(this.textCalc.getText().toString().replace(this.currentText, ""));
+                        break;
+                    case Unset:
+                        this.value = Double.parseDouble(this.textCalc.getText().toString());
+                        this.textCalc.setText(String.valueOf(this.value));
+                        break;
                 }
+                this.textCalc.setText(String.valueOf(this.value));
+                this.symbol=Symbols.Unset;
+            }
         }
-    }
 }
