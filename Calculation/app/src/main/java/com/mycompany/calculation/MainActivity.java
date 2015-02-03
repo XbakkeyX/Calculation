@@ -49,48 +49,48 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void AddNewNumber(String newNumber) {
+    public void addNewNumber(String newNumber) {
         this.textCalc.setText(this.textCalc.getText().toString() + newNumber);
     }
 
     public void onOneButtonClick(View view) {
-        AddNewNumber("1");
+        this.addNewNumber("1");
     }
 
     public void onTwoButtonClick(View view) {
-        AddNewNumber("2");
+        this.addNewNumber("2");
     }
 
     public void onThirdButtonClick(View view) {
-        AddNewNumber("3");
+        this.addNewNumber("3");
     }
 
     public void onFourButtonClick(View view) {
-        AddNewNumber("4");
+        this.addNewNumber("4");
     }
 
     public void onFiveButtonClick(View view) {
-        AddNewNumber("5");
+        this.addNewNumber("5");
     }
 
     public void onSixButtonClick(View view) {
-        AddNewNumber("6");
+        this.addNewNumber("6");
     }
 
     public void onSevenButtonClick(View view) {
-        AddNewNumber("7");
+        this.addNewNumber("7");
     }
 
     public void onEightButtonClick(View view) {
-        AddNewNumber("8");
+        this.addNewNumber("8");
     }
 
     public void onNineButtonClick(View view) {
-        AddNewNumber("9");
+        this.addNewNumber("9");
     }
 
     public void onZeroButtonClick(View view) {
-        AddNewNumber("0");
+        this.addNewNumber("0");
     }
 
     public void chooseAction (String action){
